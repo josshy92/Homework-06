@@ -17,6 +17,9 @@ var forecast = document.querySelector("#forecast")
 var currentDate = moment().format('dddd, MMMM Do, YYYY')
 console.log(currentDate)   
 
+
+var savedContainer = document.querySelector('.savedContainer')
+
 var storage = JSON.parse(localStorage.getItem('savedCities'))
 if(storage === null) {
     storage = []
@@ -145,9 +148,9 @@ function fetchData() {
                 var searchedCity = inputField.value
                 storage.push(searchedCity)
                 localStorage.setItem('savedCities', JSON.stringify(storage))
-
+                savedContainer.innerHTML = ""
                 for (var i = 0; i < storage.length; i ++) {
-                    var savedContainer = document.querySelector('.savedContainer')
+   
                     var savedLi = document.createElement('button')
                     savedLi.textContent = storage[i]
                     savedLi.setAttribute('id', cityName)
@@ -165,7 +168,7 @@ function fetchData() {
                 function renderBorder() {
                     container.classList.add("container")
             
-            
+                    inputField.value = ""
                 }
 
                 
@@ -174,5 +177,6 @@ function fetchData() {
     })
 
 }
+
 
 button.addEventListener("click", fetchData)
