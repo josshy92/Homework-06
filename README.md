@@ -8,8 +8,8 @@ Homework assignment will render temperature for cities and a 5 day forecast
 
 
 ## Mentions
-Tutor for help with for loop.
-TA P.C. for help with local storage 
+Tutor AP for help with for loop.
+TA P.C. for help with local storage & stacking weather info
 
 
 ## Link 

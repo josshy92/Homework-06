@@ -21,16 +21,57 @@ console.log(currentDate)
 
 
 var savedContainer = document.querySelector('.savedContainer')
+getCurrentHistory()
 
-var storage = JSON.parse(localStorage.getItem('savedCities'))
-if (storage === null) {
-    storage = []
+function getCity() {
+    var cityName = inputField.value
+    fetchData(cityName)
+    createHistory(cityName)
 }
 
-function fetchData() {
-    var cityName = inputField.value
+function getCurrentHistory() {
+    var storage = JSON.parse(localStorage.getItem('savedCities'))
+    if (storage === null) {
+        storage = []
+    }
+    for (var i = 0; i < storage.length; i++) {
+        var savedLi = document.createElement('button')
+        savedLi.textContent = storage[i]
+        savedLi.setAttribute('id', storage[i])
+        savedContainer.prepend(savedLi)
+        savedLi.addEventListener('click', function (event) {
+            var clickedCity = event.target.id
+            fetchData(clickedCity)
+        })
+    }
+}
+
+function createHistory(cityName) {
+    var searchedCity = inputField.value
+    savedContainer.textContent = ""
+    if (searchedCity === "") {
+        alert("You must type a city")
+        getCurrentHistory()
+        return
+    }
+    var storage = JSON.parse(localStorage.getItem('savedCities'))
+    if (storage === null) {
+        storage = []
+    }
+    storage.push(searchedCity)
+    localStorage.setItem('savedCities', JSON.stringify(storage))
+    for (var i = 0; i < storage.length; i++) {
+        var savedLi = document.createElement('button')
+        savedLi.textContent = storage[i]
+        savedLi.setAttribute('id', cityName)
+        savedContainer.prepend(savedLi)
+    }
+
+}
+
+function fetchData(city) {
     var apiKey = "f30dc0b71f772a037a522282770190be"
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + apiKey
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey
     container.innerHTML = ""
     forecast.innerHTML = ""
 
@@ -39,6 +80,7 @@ function fetchData() {
             return response.json();
         })
         .then(function (weatherData) {
+
             console.log(weatherData);
             var cityName = document.createElement("h2");
             var cityTemp = document.createElement("h2");
@@ -75,7 +117,7 @@ function fetchData() {
                     console.log(uvData)
                     var uv = document.createElement("h2")
                     uv.textContent = "UV Index: " + uvData.current.uvi
-                   
+
                     if (uvData.current.uvi < 2) {
                         uv.classList.add("uvlow");
                     }
@@ -101,7 +143,7 @@ function fetchData() {
                     // Loop through the next five days of the week
                     for (var i = 1; i < 6; i++) {
 
-                        
+
                         var fiveDay = document.createElement("div")
 
 
@@ -142,21 +184,6 @@ function fetchData() {
                     }
 
 
-
-
-
-
-                    var searchedCity = inputField.value
-                    storage.push(searchedCity)
-                    localStorage.setItem('savedCities', JSON.stringify(storage))
-                    savedContainer.innerHTML = ""
-                    for (var i = 0; i < storage.length; i++) {
-
-                        var savedLi = document.createElement('button')
-                        savedLi.textContent = storage[i]
-                        savedLi.setAttribute('id', cityName)
-                        savedContainer.prepend(savedLi)
-                    }
                     myFunction()
                     function myFunction() {
                         var x = document.createElement("IMG");
@@ -180,4 +207,4 @@ function fetchData() {
 }
 
 
-button.addEventListener("click", fetchData)
+button.addEventListener("click", getCity)
