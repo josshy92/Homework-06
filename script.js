@@ -8,7 +8,9 @@
 2. Make function using Openweathermap API
     b. create variables to selected input field, api key, and url
 3. Fetch data from URL
-4. 
+4. Access data and append to page
+5. Create button for previously searched cities
+6. Re render the cities that were looked up
 */
 var inputField = document.querySelector("#city")
 var button = document.querySelector("#getWeather")
@@ -29,6 +31,8 @@ function fetchData() {
     var cityName = inputField.value
     var apiKey = "f30dc0b71f772a037a522282770190be"
     var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + apiKey
+    container.innerHTML = ""
+    forecast.innerHTML = ""
 
     fetch(requestUrl)
         .then(function (response) {
