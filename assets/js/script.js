@@ -23,7 +23,8 @@ console.log(currentDate)
 var savedContainer = document.querySelector('.savedContainer')
 getCurrentHistory()
 
-function getCity() {
+function getCity(e) {
+    e.preventDefault()
     var cityName = inputField.value
     fetchData(cityName)
     createHistory(cityName)
@@ -46,7 +47,7 @@ function getCurrentHistory() {
     }
 }
 
-function createHistory(cityName) {
+function createHistory() {
     var searchedCity = inputField.value
     savedContainer.textContent = ""
     if (searchedCity === "") {
@@ -63,8 +64,12 @@ function createHistory(cityName) {
     for (var i = 0; i < storage.length; i++) {
         var savedLi = document.createElement('button')
         savedLi.textContent = storage[i]
-        savedLi.setAttribute('id', cityName)
+        savedLi.setAttribute('id', storage[i])
         savedContainer.prepend(savedLi)
+        savedLi.addEventListener('click', function (event) {
+            var clickedCity = event.target.id
+            fetchData(clickedCity)
+        })
     }
 
 }
