@@ -15,3 +15,5 @@ TA P.C. for help with local storage & stacking weather info
 ## Link 
 
 https://github.com/josshy92/Homework-06
+
+https://josshy92.github.io/Homework-06/
